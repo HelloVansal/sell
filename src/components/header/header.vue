@@ -1,13 +1,15 @@
 <template>
-  <div class="header">
-    我是
-  </div>
+  <div class="header">我是</div>
 </template>
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  props: {
+    seller: Object
+  }
 }
+
 </script>
 
 <style>

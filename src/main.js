@@ -2,14 +2,23 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 import App from './App'
-import goods from './components/goods/goods'
-import ratings from './components/ratings/ratings'
-import seller from './components/seller/seller'
+import goods from 'components/goods/goods'
+import ratings from 'components/ratings/ratings'
+import seller from 'components/seller/seller'
 
+import 'common/stylus/index.styl'
+
+// 全局注册vue方法
 Vue.use(VueRouter)
+Vue.use(VueResource)
 
 const routes = [
+  {
+    path: '/',
+    redirect: 'goods'
+  },
   {
     path: '/goods',
     component: goods
@@ -25,7 +34,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  'linkActiveClass': 'active'
 })
 
 Vue.config.productionTip = false
