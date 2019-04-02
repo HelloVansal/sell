@@ -2,20 +2,27 @@
   <div class="header">
     <div class="content-wrap">
       <div class="avatar">
-        <img :src="seller.avatar">
+        <img width="64" height="64" :src="seller.avatar">
       </div>
       <div class="content">
         <div class="content-title">
-          <img src="../../../resource/img/brand@2x.png"><span>{{seller.name}}</span>
+          <div></div>
+          <span>{{seller.name}}</span>
         </div>
-        <div class="description">{{seller.description}}</div>
+        <div class="description">{{seller.description}} / {{seller.deliveryTime}}分钟送达</div>
         <div class="supports">
-          <img src="../../../resource/img/decrease_1@2x.png"><span>{{seller.supports[0].description}}</span>
+          <div v-if="seller.supports" :class="classMap[seller.supports[0].type]"></div>
+          <span v-if="seller.supports">{{seller.supports[0].description}}</span>
         </div>
+      </div>
+      <div v-if="seller.supports" class="support-count">
+        <span class="count">{{seller.supports.length}}个</span><span class="iconfont">&#xe603;</span>
       </div>
     </div>
     <div class="bulletin">
-      <img src="../../../resource/img/bulletin@2x.png" alt=""><span>{{seller.bulletin}}</span><div class="iconfont">&#xe603;</div>
+      <div></div>
+      <span>{{seller.bulletin}}</span>
+      <div class="iconfont">&#xe603;</div>
     </div>
   </div>
 </template>
@@ -25,71 +32,112 @@ export default {
   name: 'Header',
   props: {
     seller: Object
+  },
+  created () {
+    this.classMap = ['decrease', 'discount', 'guarantee', 'special', 'invoice']
   }
 }
 
 </script>
 
 <style lang='stylus' scoped>
+@import '../../common/stylus/mixin'
 .header
   color rgb(255, 255, 255)
   .content-wrap
+    position relative
     height 106px
     box-sizing border-box
     padding 24px 12px 18px 24px
     background-color rgba(7, 17, 27, 0.5)
     .avatar
       float left
-      margin-right 16px
       >img
-        width 64px
-        height 64px
         border-radius 4px
     .content
+      margin-left 16px
+      display inline-block
+      font-size 0
       .content-title
-        margin-top 2px
-        img
+        margin 2px 0 8px 0
+        >div
+          display inline-block
+          width 30px
           height 18px
+          bg-img brand
+          background-size 100%
+          background-repeat no-repeat
           vertical-align top
-        span
+        >span
           margin-left 6px
           font-size 16px
           line-height 18px
           font-weight bold
       .description
-        margin-top 8px
+        margin-bottom 10px
         font-size 12px
-        font-weight 200
       .supports
-        margin-top 6px
-        >img
+        >div
+          display inline-block
+          width 12px
           height 12px
-          vertical-align text-bottom
+          background-size 100%
+          background-repeat no-repeat
+          vertical-align top
+        .decrease
+          bg-img decrease_1
+        .discount
+          bg-img discount_1
+        .guarantee
+          bg-img guarantee_1
+        .special
+          bg-img special_1
+        .invoice
+          bg-img invoice_1
         >span
           margin-left 4px
           font-size 10px
-          font-weight 200
           line-height 12px
+    .support-count
+      position absolute
+      height 24px
+      right 12px
+      padding 0 4px 0 8px
+      bottom 15px
+      border-radius 12px
+      background-color rgba(0, 0, 0, 0.2)
+      >span:nth-child(1)
+        display inline-block
+        font-size 10px
+        line-height 24px
+      >span:nth-child(2)
+        line-height 24px
+        vertical-align top
   .bulletin
     position relative
     height 28px
     padding-right 24px
-    //overflow auto
+    // overflow auto
     background-color rgba(7, 17, 27, 0.2)
-    //overflow hidden
+    font-size 0
+    // overflow hidden
     // text-overflow ellipsis
     // white-space nowrap
-    img
-      margin-left 12px
+    >div:nth-child(1)
+      display inline-block
+      width 22px
       height 12px
+      bg-img(bulletin)
+      background-size 100%
+      background-repeat no-repeat
+      margin-left 12px
       vertical-align text-bottom
-    span:nth-child(2)
+    >span
       margin-left 4px
       margin-right 30px
       font-size 10px
-      font-weight 200
       line-height 28px
-    div:nth-child(3)
+    >div:nth-child(3)
       display block
       position absolute
       right 12px
