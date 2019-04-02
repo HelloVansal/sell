@@ -12,6 +12,9 @@
         <div class="supports">
           <img src="../../../resource/img/decrease_1@2x.png"><span>{{seller.supports[0].description}}</span>
         </div>
+        <span class="supports-icon">
+            <div class="iconfont">5个&#xe603;</div>
+        </span>
       </div>
     </div>
     <div class="bulletin">
@@ -46,6 +49,7 @@ export default {
         height 64px
         border-radius 4px
     .content
+      position relative
       .content-title
         margin-top 2px
         img
@@ -70,15 +74,27 @@ export default {
           font-size 10px
           font-weight 200
           line-height 12px
+      .supports-icon
+        display inline-block
+        padding 7px 8px
+        position absolute
+        right 0
+        bottom -6px
+        border-radius 16px
+        background-color rgba(0,0,0,0.2)
+        div
+          font-size 10px
+          font-weight: 200
+          line-height: 12px
   .bulletin
     position relative
     height 28px
     padding-right 24px
-    //overflow auto
     background-color rgba(7, 17, 27, 0.2)
-    //overflow hidden
-    // text-overflow ellipsis
-    // white-space nowrap
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+    clear:both
     img
       margin-left 12px
       height 12px
