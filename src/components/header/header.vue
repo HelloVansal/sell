@@ -14,6 +14,9 @@
           <div v-if="seller.supports" :class="classMap[seller.supports[0].type]"></div>
           <span v-if="seller.supports">{{seller.supports[0].description}}</span>
         </div>
+        <span class="supports-icon">
+            <div class="iconfont">5个&#xe603;</div>
+        </span>
       </div>
       <div v-if="seller.supports" class="support-count">
         <span class="count">{{seller.supports.length}}个</span><span class="iconfont">&#xe603;</span>
@@ -55,9 +58,13 @@ export default {
       >img
         border-radius 4px
     .content
+<<<<<<< HEAD
       margin-left 16px
       display inline-block
       font-size 0
+=======
+      position relative
+>>>>>>> 53e864c8f0d212dd7b347faff78a6b62797e9c9a
       .content-title
         margin 2px 0 8px 0
         >div
@@ -98,6 +105,7 @@ export default {
           margin-left 4px
           font-size 10px
           line-height 12px
+<<<<<<< HEAD
     .support-count
       position absolute
       height 24px
@@ -113,10 +121,25 @@ export default {
       >span:nth-child(2)
         line-height 24px
         vertical-align top
+=======
+      .supports-icon
+        display inline-block
+        padding 7px 8px
+        position absolute
+        right 0
+        bottom -6px
+        border-radius 16px
+        background-color rgba(0,0,0,0.2)
+        div
+          font-size 10px
+          font-weight: 200
+          line-height: 12px
+>>>>>>> 53e864c8f0d212dd7b347faff78a6b62797e9c9a
   .bulletin
     position relative
     height 28px
     padding-right 24px
+<<<<<<< HEAD
     // overflow auto
     background-color rgba(7, 17, 27, 0.2)
     font-size 0
@@ -126,6 +149,15 @@ export default {
     >div:nth-child(1)
       display inline-block
       width 22px
+=======
+    background-color rgba(7, 17, 27, 0.2)
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+    clear:both
+    img
+      margin-left 12px
+>>>>>>> 53e864c8f0d212dd7b347faff78a6b62797e9c9a
       height 12px
       bg-img(bulletin)
       background-size 100%
