@@ -43,13 +43,13 @@ export default {
   .tab
     display flex
     width 100%
-    height .40rem
-    line-height .40rem
+    height 40px
+    line-height 40px
     color rgb(77, 85, 93)
     border-1px rgba(7, 17, 27, 0.1)
     .tab-item
       flex 1
-      font-size .14rem
+      font-size 14px
       text-align center
     .active
       color rgb(240, 20, 20)
