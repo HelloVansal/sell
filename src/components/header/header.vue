@@ -20,36 +20,38 @@
         <span class="iconfont">&#xe603;</span>
       </div>
     </div>
-    <div class="bulletin-wrap">
+    <div class="bulletin-wrap" @click="funcdetailShow()">
       <div class="bulletin-img"></div>
       <span class="bulletin-text">{{seller.bulletin}}</span>
-      <div class="iconfont" @click="funcdetailShow()">&#xe603;</div>
+      <div class="iconfont">&#xe603;</div>
     </div>
     <div class="bgImg">
       <img :src="seller.avatar">
     </div>
-    <div v-if="detailShow" class="detail">
-      <div class="detail-name">{{seller.name}}</div>
-      <div class="star-wrap">
-        <span class="star" :class="item" v-for="(item, index) of this.starname" :key="index"></span>
-      </div>
-      <div class="detail-title">
-        <div class="line"></div>
-        <span class="detail-title-text">优惠信息</span>
-        <div class="line"></div>
-      </div>
-      <div class="detail-content-wrap">
-        <div class="detail-content" v-for="item of seller.supports" :key="item.type">
-          <div class="detail-img" :class="classMap[item.type]"></div>
-          <span v-if="seller.supports" class="detail-content">{{item.description}}</span>
+    <div v-show="detailShow" class="detail">
+      <div class="detail-wrap">
+        <div class="detail-name">{{seller.name}}</div>
+        <div class="star-wrap">
+          <span class="star" :class="item" v-for="(item, index) of this.starname" :key="index"></span>
         </div>
+        <div class="detail-title">
+          <div class="line"></div>
+          <span class="detail-title-text">优惠信息</span>
+          <div class="line"></div>
+        </div>
+        <div class="detail-content-wrap">
+          <div class="detail-content" v-for="item of seller.supports" :key="item.type">
+            <div class="detail-img" :class="classMap[item.type]"></div>
+            <span v-if="seller.supports" class="detail-content">{{item.description}}</span>
+          </div>
+        </div>
+        <div class="detail-title">
+          <div class="line"></div>
+          <span class="detail-title-text">商家公告</span>
+          <div class="line"></div>
+        </div>
+        <div class="detail-bulletin">{{seller.bulletin}}</div>
       </div>
-      <div class="detail-title">
-        <div class="line"></div>
-        <span class="detail-title-text">商家公告</span>
-        <div class="line"></div>
-      </div>
-      <div class="detail-bulletin">{{seller.bulletin}}</div>
       <div class="iconfont" @click="funcdetailShow()">&#xe608;</div>
     </div>
   </div>
@@ -212,90 +214,95 @@ export default {
       height 100%
   .detail
     position fixed
+    z-index 100
     box-sizing border-box
     top 0
     left 0
     width 100%
-    bottom -20px
+    bottom 0
     text-align center
     overflow auto
     background-color rgba(7, 17, 27, 0.8)
     padding 64px 30px 32px 30px
-    .detail-name
-      margin-bottom 16px
-      font-size 16px
-      font-weight 700
-    .star-wrap
-      height 24px
-      margin-bottom 28px
-      font-size 0
-      .star
-        display inline-block
-        width 24px
-        height 24px
-        margin 0 6px
-        background-size 24px 24px
-        background-repeat no-repeat
-      .staron
-        bg-img star48_on
-      .starhalf
-        bg-img star48_half
-      .staroff
-        bg-img star48_off
-    .detail-title
-      height 14px
-      margin-bottom 24px
-      font-size 0
-      .line
-        display inline-block
-        width 33%
-        height 10px
-        border-top 2px solid rgba(255, 255, 255, 0.2)
-        vertical-align middle
-      .detail-title-text
-        font-size 14px
+    .detail-wrap
+      min-height 100%
+      box-sizing border-box
+      padding-bottom 32px
+      .detail-name
+        margin-bottom 16px
+        font-size 16px
         font-weight 700
-      .line:nth-child(1)
-        margin-right 12px
-      .line:nth-child(3)
-        margin-left 12px
-    .detail-content-wrap
-      margin 0 12px 22px 12px
-      .detail-content
-        height 16px
-        line-height 16px
-        text-align left
-        margin-bottom 12px
+      .star-wrap
+        height 24px
+        margin-bottom 28px
         font-size 0
-        .detail-img
+        .star
           display inline-block
-          width 16px
-          height 16px
-          margin-right 6px
-          vertical-align top
-          background-size 16px 16px
+          width 24px
+          height 24px
+          margin 0 6px
+          background-size 24px 24px
           background-repeat no-repeat
-        .decrease
-          bg-img decrease_1
-        .discount
-          bg-img discount_1
-        .guarantee
-          bg-img guarantee_1
-        .special
-          bg-img special_1
-        .invoice
-          bg-img invoice_1
+        .staron
+          bg-img star48_on
+        .starhalf
+          bg-img star48_half
+        .staroff
+          bg-img star48_off
+      .detail-title
+        height 14px
+        margin-bottom 24px
+        font-size 0
+        .line
+          display inline-block
+          width 33%
+          height 10px
+          border-top 2px solid rgba(255, 255, 255, 0.2)
+          vertical-align middle
+        .detail-title-text
+          font-size 14px
+          font-weight 700
+        .line:nth-child(1)
+          margin-right 12px
+        .line:nth-child(3)
+          margin-left 12px
+      .detail-content-wrap
+        margin 0 12px 22px 12px
         .detail-content
-          font-size 12px
-    .detail-bulletin
-      margin 0 12px 40px 12px
-      font-size 12px
-      line-height 24px
-      text-align left
+          height 16px
+          line-height 16px
+          text-align left
+          margin-bottom 12px
+          font-size 0
+          .detail-img
+            display inline-block
+            width 16px
+            height 16px
+            margin-right 6px
+            vertical-align top
+            background-size 16px 16px
+            background-repeat no-repeat
+          .decrease
+            bg-img decrease_1
+          .discount
+            bg-img discount_1
+          .guarantee
+            bg-img guarantee_1
+          .special
+            bg-img special_1
+          .invoice
+            bg-img invoice_1
+          .detail-content
+            font-size 12px
+      .detail-bulletin
+        margin 0 12px 40px 12px
+        font-size 12px
+        line-height 24px
+        text-align left
     >.iconfont
       width 32px
-      margin 0 auto
-      margin-bottom 32px
+      height 32px
+      margin -32px auto 0 auto
       font-size 32px
       color rgba(255, 255, 255, 0.5)
 </style>
