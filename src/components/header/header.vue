@@ -32,7 +32,7 @@
       <div class="detail-wrap">
         <div class="detail-name">{{seller.name}}</div>
         <div class="star-wrap">
-          <span class="star" :class="item" v-for="(item, index) of this.starname" :key="index"></span>
+          <star :size="48" :score="seller.score" class="star"></star>
         </div>
         <div class="detail-title">
           <div class="line"></div>
@@ -58,26 +58,23 @@
 </template>
 
 <script>
+import star from 'components/star/star'
 export default {
   name: 'Header',
   props: {
-    seller: Object,
-    appdom: HTMLDivElement
+    seller: Object
+  },
+  components: {
+    star
   },
   data () {
     return {
-      'detailShow': false,
-      'detailstyle': {
-        filter: 'blur(10px)'
-      }
+      'detailShow': false
     }
   },
   methods: {
     funcdetailShow: function () {
       this.detailShow = !this.detailShow
-      if (this.detailShow) {
-        this.appdom.style.filter = 'blur(10px)'
-      }
     }
   },
   created () {
@@ -232,40 +229,22 @@ export default {
         margin-bottom 16px
         font-size 16px
         font-weight 700
-      .star-wrap
-        height 24px
+      >.star-wrap
         margin-bottom 28px
-        font-size 0
-        .star
-          display inline-block
-          width 24px
-          height 24px
-          margin 0 6px
-          background-size 24px 24px
-          background-repeat no-repeat
-        .staron
-          bg-img star48_on
-        .starhalf
-          bg-img star48_half
-        .staroff
-          bg-img star48_off
+        text-align center
       .detail-title
+        display flex
         height 14px
         margin-bottom 24px
         font-size 0
         .line
-          display inline-block
-          width 33%
-          height 10px
-          border-top 2px solid rgba(255, 255, 255, 0.2)
-          vertical-align middle
+          flex 1
+          height 5px
+          border-bottom 2px solid rgba(255, 255, 255, 0.2)
         .detail-title-text
           font-size 14px
           font-weight 700
-        .line:nth-child(1)
-          margin-right 12px
-        .line:nth-child(3)
-          margin-left 12px
+          padding 0 12px
       .detail-content-wrap
         margin 0 12px 22px 12px
         .detail-content

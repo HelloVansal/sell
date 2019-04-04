@@ -1,6 +1,6 @@
 <template>
   <div id="app" ref="blur">
-    <v-header :seller="seller" :appdom="appdom"></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab border-1px">
       <router-link to="/goods" class="tab-item">商品</router-link>
       <router-link to="/ratings" class="tab-item">评价</router-link>
@@ -23,7 +23,6 @@ export default {
   data () {
     return {
       seller: {}
-      // appdom: <div></div>
     }
   },
   created () {
@@ -31,8 +30,6 @@ export default {
       response = response.body
       if (response.errno === ERR_OK) {
         this.seller = response.data
-        this.appdom = this.$refs.blur
-        console.log(this.appdom)
       }
     })
   }
