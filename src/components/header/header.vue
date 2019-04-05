@@ -28,32 +28,34 @@
     <div class="bgImg">
       <img :src="seller.avatar">
     </div>
-    <div v-show="detailShow" class="detail">
-      <div class="detail-wrap">
-        <div class="detail-name">{{seller.name}}</div>
-        <div class="star-wrap">
-          <star :size="48" :score="seller.score" class="star"></star>
-        </div>
-        <div class="detail-title">
-          <div class="line"></div>
-          <span class="detail-title-text">优惠信息</span>
-          <div class="line"></div>
-        </div>
-        <div class="detail-content-wrap">
-          <div class="detail-content" v-for="item of seller.supports" :key="item.type">
-            <div class="detail-img" :class="classMap[item.type]"></div>
-            <span v-if="seller.supports" class="detail-content">{{item.description}}</span>
+    <transition name="fade">
+      <div v-show="detailShow" class="detail">
+        <div class="detail-wrap">
+          <div class="detail-name">{{seller.name}}</div>
+          <div class="star-wrap">
+            <star :size="48" :score="seller.score" class="star"></star>
           </div>
+          <div class="detail-title">
+            <div class="line"></div>
+            <span class="detail-title-text">优惠信息</span>
+            <div class="line"></div>
+          </div>
+          <div class="detail-content-wrap">
+            <div class="detail-content" v-for="item of seller.supports" :key="item.type">
+              <div class="detail-img" :class="classMap[item.type]"></div>
+              <span v-if="seller.supports" class="detail-content">{{item.description}}</span>
+            </div>
+          </div>
+          <div class="detail-title">
+            <div class="line"></div>
+            <span class="detail-title-text">商家公告</span>
+            <div class="line"></div>
+          </div>
+          <div class="detail-bulletin">{{seller.bulletin}}</div>
         </div>
-        <div class="detail-title">
-          <div class="line"></div>
-          <span class="detail-title-text">商家公告</span>
-          <div class="line"></div>
-        </div>
-        <div class="detail-bulletin">{{seller.bulletin}}</div>
+        <div class="iconfont" @click="funcdetailShow()">&#xe608;</div>
       </div>
-      <div class="iconfont" @click="funcdetailShow()">&#xe608;</div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -219,8 +221,21 @@ export default {
     bottom 0
     text-align center
     overflow auto
-    background-color rgba(7, 17, 27, 0.8)
     padding 64px 30px 32px 30px
+    background rgba(7, 17, 27, 0.8)
+    &.fade-enter-active
+      animation: fade 0.5s
+    &.fade-leave-active
+      animation: fade 0.5s reverse
+    @keyframes fade
+      0%
+        transform: scale(0)
+        background rgba(7, 17, 27, 0)
+      50%
+        transform: scale(1.5)
+      100%
+        transform: scale(1)
+        background rgba(7, 17, 27, 0.8)
     .detail-wrap
       min-height 100%
       box-sizing border-box
