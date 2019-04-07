@@ -41,7 +41,7 @@
             <div class="line"></div>
           </div>
           <div class="detail-content-wrap">
-            <div class="detail-content" v-for="item of seller.supports" :key="item.type">
+            <div class="detail-content" v-for="(item, index) of seller.supports" :key="index">
               <div class="detail-img" :class="classMap[item.type]"></div>
               <span v-if="seller.supports" class="detail-content">{{item.description}}</span>
             </div>
