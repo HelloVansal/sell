@@ -81,7 +81,6 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'discount', 'special', 'special']
-    this.starname = ['staron', 'staron', 'staron', 'staron', 'staroff']
   }
 }
 
@@ -224,9 +223,9 @@ export default {
     padding 64px 30px 32px 30px
     background rgba(7, 17, 27, 0.8)
     &.fade-enter-active
-      animation: fade 0.5s
+      animation: fade .5s
     &.fade-leave-active
-      animation: fade 0.5s reverse
+      animation: fade .5s reverse
     @keyframes fade
       0%
         transform: scale(0)
@@ -235,11 +234,11 @@ export default {
         transform: scale(1.5)
       100%
         transform: scale(1)
-        background rgba(7, 17, 27, 0.8)
     .detail-wrap
       min-height 100%
       box-sizing border-box
       padding-bottom 32px
+      backdrop-filter blur(10px)
       .detail-name
         margin-bottom 16px
         font-size 16px
