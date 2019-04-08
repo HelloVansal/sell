@@ -1,64 +1,69 @@
 <template>
   <div class="goods">
-    <ul class="menu-wrap">
-      <li class="menu-item border-1px" v-for="(item, index) of goods" :key="index">
-        <span class="text">
-          <span v-if="item.type>0" class="icon" :class="classMap[item.type]"></span>
-          <span>{{item.name}}</span>
-        </span>
-      </li>
-    </ul>
-    <div class="main-wrap">
-      <ul class="main" v-for="(good, index) of goods" :key="index">
-        <div class="title-wrap">
-          <div class="title">{{good.name}}</div>
-        </div>
-        <ul class="foods-wrap">
-          <li class="food-item border-1px" v-for="(item, index) of good.foods" :key="index">
-            <div class="food-img-wrap">
-              <img :src="item.image" width="57" height="57">
-            </div>
-            <div class="food-content">
-              <div class="name">{{item.name}}</div>
-              <div class="desc" v-if="item.description">{{item.description}}</div>
-              <div class="desc2">
-                <span class="sellCount">月售{{item.sellCount}}份</span>
-                <span class="rating">好评率{{item.rating}}%</span>
-              </div>
-              <div class="price-all">
-                <span class="price-icon">￥</span>
-                <span class="price">{{item.price}}</span>
-                <span class="old-price" v-if="item.oldPrice">￥{{item.oldPrice}}</span>
-              </div>
-              <div class="add">
-                <span class="iconfont" v-show="numShow">&#xe60c;</span>
-                <span class="num" v-show="numShow">{{num}}</span>
-                <span class="iconfont" @click="funcAdd(item,index)">&#xe60b;</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+    <div class="menu-wrap" ref="menuWrap">
+      <ul class="menu">
+        <li
+          class="menu-item border-1px"
+          v-for="(item, index) of goods"
+          :key="index"
+          :class="{'current':currentIndex === index}"
+          @click="foodMove(index,$event)"
+        >
+          <span class="text">
+            <span v-if="item.type>0" class="icon" :class="classMap[item.type]"></span>
+            <span>{{item.name}}</span>
+          </span>
+        </li>
       </ul>
+    </div>
+    <div class="main-wrap" ref="mainWrap">
+      <div>
+        <ul class="main food-list-hook" v-for="(good, index) of goods" :key="index">
+          <div class="title-wrap">
+            <div class="title">{{good.name}}</div>
+          </div>
+          <ul class="foods-wrap">
+            <li class="food-item border-1px" v-for="(item, index) of good.foods" :key="index">
+              <div class="food-img-wrap">
+                <img :src="item.image" width="57" height="57">
+              </div>
+              <div class="food-content">
+                <div class="name">{{item.name}}</div>
+                <div class="desc" v-if="item.description">{{item.description}}</div>
+                <div class="desc2">
+                  <span class="sellCount">月售{{item.sellCount}}份</span>
+                  <span class="rating">好评率{{item.rating}}%</span>
+                </div>
+                <div class="price-all">
+                  <span class="price-icon">￥</span>
+                  <span class="price">{{item.price}}</span>
+                  <span class="old-price" v-if="item.oldPrice">￥{{item.oldPrice}}</span>
+                </div>
+                <div class="add">
+                  <span class="iconfont" v-show="false">&#xe60c;</span>
+                  <span class="num" v-show="false">0</span>
+                  <span class="iconfont">&#xe60b;</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+
 const ERR_OK = 0
 
 export default {
   data () {
     return {
       goods: {},
-      numShow: false,
-      num: 0
-    }
-  },
-  methods: {
-    funcAdd (item, index) {
-      console.log(item, index)
-      // item[index].num++
-      // item[index].numShow = true
+      listHeight: [],
+      scrollY: 0
     }
   },
   created () {
@@ -67,9 +72,64 @@ export default {
       response = response.body
       if (response.errno === ERR_OK) {
         this.goods = response.data
+        // 由于vue中数据更新是异步的，在dom解构没有加载完成，BScroll无法获取目标容器的高度，会出现无法滚动的现象，vue中的$nextTick()可以解决这个问题，在页面数据变化完成后才执行的函数需要写在$nextTick中 。
+        this.$nextTick(() => {
+          this._initScroll()
+          this._calculateHeight()
+        })
       }
     }
     )
+  },
+  computed: {
+    // 计算当Y值在listHeight列表的某个区间时，返回这个标题的索引，将这个索引绑定到menu-wrap下的所有标签，当这个索引等于所有标签中的某个索引时，将这个标签绑定class="current"，就可以设置样式了
+    currentIndex () {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i]
+        let height2 = this.listHeight[i + 1]
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i
+        }
+      }
+      return 0
+    }
+  },
+  methods: {
+    // 初始化2个滚动条
+    // better-scroll会将点击事件去掉，传入click: true后这个滚动项中的子标签才能被点击
+    // probeType设置为3可以监听scroll
+    _initScroll () {
+      this.menuScroll = new BScroll(this.$refs.menuWrap, {
+        click: true
+      })
+      this.mainScroll = new BScroll(this.$refs.mainWrap, {
+        probeType: 3
+      })
+      // 实时计算当前滚动的Y值
+      this.mainScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
+    },
+    // 获取每个标题的Y值，存储于listHeight
+    _calculateHeight () {
+      let foodList = this.$refs.mainWrap.getElementsByClassName('food-list-hook')
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i in foodList; i++) {
+        height += foodList[i].clientHeight
+        this.listHeight.push(height)
+      }
+    },
+    foodMove (index, event) {
+      // 在非移动端模式下，better-scroll也派发了一个click事件，所以有2个事件，使用event._constructed将js原生事件return掉
+      // better-scroll派发的event事件和原生js的event有属性上的区别，其中有一个属性为event._constructed。better-scroll派发的事件中event._constructed为true，原生点击事件中没有这个属性。
+      if (!event._constructed) {
+        return
+      }
+      // better-scroll有一个接口scrollToElement可以操作滚动到指定元素,第二个参数为滚动动画时间
+      let food = this.$refs.mainWrap.getElementsByClassName('food-list-hook')[index]
+      this.mainScroll.scrollToElement(food, 300)
+    }
   }
 }
 
@@ -90,22 +150,20 @@ export default {
     flex-shrink 0
     flex-direction column
     width 80px
-    overflow auto
     background-color #f3f5f7
-    &::-webkit-scrollbar
-      width 0
-    // &::-webkit-scrollbar-thumb
-    // background-color #d9dde1
-    // &::-webkit-scrollbar-track
-    // background-color blue
+    .current
+      z-index 10
+      margin-top -1px
+      font-weight 700
+      background-color #fff
+      &.text
+        border-none()
     .menu-item
       display table
       width 100%
       padding 0 12px
       box-sizing border-box
       height 54px
-      &:hover
-        background-color #fff
       .text
         display table-cell
         vertical-align middle
@@ -134,10 +192,6 @@ export default {
   .main-wrap
     flex 1
     width 100%
-    overflow-x hidden
-    overflow-y auto
-    &::-webkit-scrollbar
-      width 0
     .main
       .title-wrap
         padding-left 3px
@@ -159,7 +213,7 @@ export default {
           position relative
           padding 18px 0
           box-sizing border-box
-          border-1px (rgba(7, 17, 27, 0.1))
+          border-1px rgba(7, 17, 27, 0.1)
           &:last-child
             border-none()
           .food-img-wrap
