@@ -21,8 +21,12 @@
         <div>
           <ul class="main food-list-hook" v-for="(good, index) of goods" :key="index">
             <div class="title">{{good.name}}</div>
-            <ul class="foods-wrap">
-              <li class="food-item border-1px" v-for="(item, index) of good.foods" :key="index">
+            <ul class="foods-wrap" ref="foods">
+              <li
+                class="food-item border-1px food-item-hook"
+                v-for="(item, index) of good.foods"
+                :key="index"
+              >
                 <div class="food-img-wrap">
                   <img :src="item.image" width="60" height="60">
                 </div>
@@ -41,7 +45,7 @@
                   <div class="add">
                     <span class="iconfont" v-show="false">&#xe60c;</span>
                     <span class="num" v-show="false">0</span>
-                    <span class="iconfont">&#xe60b;</span>
+                    <span class="iconfont" @click="funcAdd(index)">&#xe60b;</span>
                   </div>
                 </div>
               </li>
@@ -50,25 +54,29 @@
         </div>
       </div>
     </div>
-    <shoppingCart class="shoppingCart"></shoppingCart>
+    <shopCart class="shopCart" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopCart>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
-import shoppingCart from 'components/shoppingCart/shoppingCart'
+import shopCart from 'components/shopCart/shopCart'
 
 const ERR_OK = 0
 
 export default {
+  props: {
+    seller: Object
+  },
   components: {
-    shoppingCart
+    shopCart
   },
   data () {
     return {
       goods: {},
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectFoods: []
     }
   },
   created () {
@@ -134,6 +142,14 @@ export default {
       // better-scroll有一个接口scrollToElement可以操作滚动到指定元素,第二个参数为滚动动画时间
       let food = this.$refs.mainWrap.getElementsByClassName('food-list-hook')[index]
       this.mainScroll.scrollToElement(food, 300)
+    },
+    funcAdd (index) {
+      // let food = this.$refs.foods.getElementsByClassName('food-item-hook')[index]
+      // let food = this.$refs.foods
+      this.$nextTick(() => {
+        console.log('1')
+      }
+      )
     }
   }
 }
@@ -143,134 +159,134 @@ export default {
 <style lang='stylus' scoped>
 @import '../../common/stylus/mixin'
 .goods
-  /*position relative*/
   .goods-wrap
-    display flex
-    position absolute
-    width 100%
-    top 174px
-    left 0
-    bottom 47px
-    overflow hidden
+    display: flex
+    position: absolute
+    width: 100%
+    top: 174px
+    left: 0
+    bottom: 47px
+    overflow: hidden
     .menu-wrap
-      display flex
-      flex-shrink 0
-      flex-direction column
-      width 80px
-      background-color #f3f5f7
+      display: flex
+      flex-shrink: 0
+      flex-direction: column
+      width: 80px
+      background-color: #f3f5f7
       .current
-        z-index 10
-        margin-top -1px
-        font-weight 700
-        background-color #fff
+        z-index: 10
+        margin-top: -1px
+        font-weight: 700
+        background-color: #fff
         &.text
           border-none()
       .menu-item
-        display table
-        width 100%
-        padding 0 12px
-        box-sizing border-box
-        height 54px
+        display: table
+        width: 100%
+        padding: 0 12px
+        box-sizing: border-box
+        height: 54px
         .text
-          display table-cell
-          vertical-align middle
-          font-size 12px
-          line-height 14px
-          color rgb(24, 20, 20)
+          display: table-cell
+          vertical-align: middle
+          font-size: 12px
+          line-height: 14px
+          color: rgb(24, 20, 20)
           border-1px(rgba(7, 17, 27, 0.1))
         .icon
-          display inline-block
-          width 14px
-          height 14px
-          font-size 14px
-          vertical-align top
-          background-size 14px 14px
-          background-repeat no-repeat
+          display: inline-block
+          width: 14px
+          height: 14px
+          font-size: 14px
+          vertical-align: top
+          background-size: 14px 14px
+          background-repeat: no-repeat
           &.decrease
-            bg-img decrease_3
+            bg-img: decrease_3
           &.discount
-            bg-img discount_3
+            bg-img: discount_3
           &.guarantee
-            bg-img guarantee_3
+            bg-img: guarantee_3
           &.special
-            bg-img special_3
+            bg-img: special_3
           &.invoice
-            bg-img invoice_3
+            bg-img: invoice_3
     .main-wrap
-      flex 1
-      width 100%
+      flex: 1
+      width: 100%
       .main
         .title
-          width 100%
-          height 26px
-          padding-left 8px
-          font-size 12px
-          line-height 26px
-          border-left 3px solid #d9dde1
-          color rgb(147, 153, 159)
-          background-color #f3f5f7
+          width: 100%
+          height: 26px
+          padding-left: 8px
+          font-size: 12px
+          line-height: 26px
+          border-left: 3px solid #d9dde1
+          color: rgb(147, 153, 159)
+          background-color: #f3f5f7
         .foods-wrap
-          width 100%
-          box-sizing border-box
-          padding 0 18px
+          width: 100%
+          box-sizing: border-box
+          padding: 0 18px
           .food-item
-            display flex
-            position relative
-            padding 18px 0
-            box-sizing border-box
-            border-1px rgba(7, 17, 27, 0.1)
+            display: flex
+            position: relative
+            padding: 18px 0
+            box-sizing: border-box
+            border-1px: rgba(7, 17, 27, 0.1)
             &:last-child
               border-none()
             .food-img-wrap
-              display inline-block
-              margin-right 10px
-              vertical-align top
+              display: inline-block
+              margin-right: 10px
+              vertical-align: top
             .food-content
-              flex 1
-              margin-top 2px
+              flex: 1
+              margin-top: 2px
               .name
-                font-size 14px
-                color rgb(7, 17, 27)
-                line-height 14px
-                margin-bottom 8px
+                font-size: 14px
+                color: rgb(7, 17, 27)
+                line-height: 14px
+                margin-bottom: 8px
               .desc, .desc2
-                font-size 10px
-                color rgb(147, 153, 159)
-                margin-bottom 8px
-               .desc
-                 line-height 14px
+                font-size: 10px
+                color: rgb(147, 153, 159)
+                margin-bottom: 8px
+              .desc
+                line-height: 14px
               .rating
-                  margin-left 6px
+                margin-left: 6px
               .price-all
-                font-size 0
+                font-size: 0
                 .price-icon, .price, .old-price
-                  font-size 10px
-                  color rgb(147, 153, 159)
-                  font-weight normal
-                  line-height 24px
+                  font-size: 10px
+                  color: rgb(147, 153, 159)
+                  font-weight: normal
+                  line-height: 24px
                 .price-icon
-                  color red
+                  color: red
                 .price
-                  font-size 14px
-                  font-weight 700
-                  color red
+                  font-size: 14px
+                  font-weight: 700
+                  color: red
                 .old-price
-                  margin-left 8px
-                  text-decoration line-through
+                  margin-left: 8px
+                  text-decoration: line-through
               .add
-                position absolute
-                right 0
-                bottom 18px
-                font-size 0
+                position: absolute
+                right: 0
+                bottom: 18px
+                font-size: 0
               .num
-                display inline-block
-                width 24px
-                font-size 10px
-                line-height 24px
-                text-align center
-                color rgb(147, 153, 159)
+                display: inline-block
+                width: 24px
+                font-size: 10px
+                line-height: 24px
+                text-align: center
+                color: rgb(147, 153, 159)
               .iconfont
-                vertical-align top
-                font-size 20px
-                line-height 24px
+                vertical-align: top
+                font-size: 24px
+                line-height: 24px
+                color: rgb(0, 160, 220)
 </style>

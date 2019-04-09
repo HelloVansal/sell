@@ -89,213 +89,213 @@ export default {
 <style lang='stylus' scoped>
 @import '../../common/stylus/mixin'
 .header
-  position relative
-  overflow hidden
-  color rgb(255, 255, 255)
-  background-color rgba(7, 17, 27, 0.5)
+  position: relative
+  overflow: hidden
+  color: rgb(255, 255, 255)
+  background-color: rgba(7, 17, 27, 0.5)
   .content-wrap
-    position relative
-    height 106px
-    box-sizing border-box
-    padding 24px 12px 18px 24px
+    position: relative
+    height: 106px
+    box-sizing: border-box
+    padding: 24px 12px 18px 24px
     .avatar
-      float left
+      float: left
       >img
-        border-radius 4px
+        border-radius: 4px
     .content
-      margin-left 16px
-      display inline-block
-      font-size 0
-      position relative
+      margin-left: 16px
+      display: inline-block
+      font-size: 0
+      position: relative
       .content-title
-        margin 2px 0 8px 0
+        margin: 2px 0 8px 0
         >div
-          display inline-block
-          width 30px
-          height 18px
-          bg-img brand
-          background-size 100%
-          background-repeat no-repeat
-          vertical-align top
+          display: inline-block
+          width: 30px
+          height: 18px
+          bg-img: brand
+          background-size: 100%
+          background-repeat: no-repeat
+          vertical-align: top
         >span
-          margin-left 6px
-          font-size 16px
-          line-height 18px
-          font-weight bold
+          margin-left: 6px
+          font-size: 16px
+          line-height: 18px
+          font-weight: bold
       .description
-        margin-bottom 10px
-        font-size 12px
+        margin-bottom: 10px
+        font-size: 12px
       .supports
         >div
-          display inline-block
-          width 12px
-          height 12px
-          background-size 100%
-          background-repeat no-repeat
-          vertical-align top
+          display: inline-block
+          width: 12px
+          height: 12px
+          background-size: 100%
+          background-repeat: no-repeat
+          vertical-align: top
         .decrease
-          bg-img decrease_1
+          bg-img: decrease_1
         .discount
-          bg-img discount_1
+          bg-img: discount_1
         .guarantee
-          bg-img guarantee_1
+          bg-img: guarantee_1
         .special
-          bg-img special_1
+          bg-img: special_1
         .invoice
-          bg-img invoice_1
+          bg-img: invoice_1
         >span
-          margin-left 4px
-          font-size 10px
-          line-height 12px
+          margin-left: 4px
+          font-size: 10px
+          line-height: 12px
     .support-count
-      position absolute
-      height 24px
-      right 12px
-      padding 0 4px 0 8px
-      bottom 15px
-      border-radius 12px
-      background-color rgba(0, 0, 0, 0.2)
+      position: absolute
+      height: 24px
+      right: 12px
+      padding: 0 4px 0 8px
+      bottom: 15px
+      border-radius: 12px
+      background-color: rgba(0, 0, 0, 0.2)
       >span:nth-child(1)
-        display inline-block
-        font-size 10px
-        line-height 24px
+        display: inline-block
+        font-size: 10px
+        line-height: 24px
       >span:nth-child(2)
-        line-height 24px
-        vertical-align top
+        line-height: 24px
+        vertical-align: top
       .supports-icon
-        display inline-block
-        padding 7px 8px
-        position absolute
-        right 0
-        bottom -6px
-        border-radius 16px
-        background-color rgba(0, 0, 0, 0.2)
+        display: inline-block
+        padding: 7px 8px
+        position: absolute
+        right: 0
+        bottom: -6px
+        border-radius: 16px
+        background-color: rgba(0, 0, 0, 0.2)
         div
-          font-size 10px
-          line-height 12px
+          font-size: 10px
+          line-height: 12px
   .bulletin-wrap
-    position relative
-    height 28px
-    line-height 28px
-    background-color rgba(7, 17, 27, 0.2)
-    padding 0 32px 0 4px
-    overflow hidden
-    white-space nowrap
-    text-overflow ellipsis
+    position: relative
+    height: 28px
+    line-height: 28px
+    background-color: rgba(7, 17, 27, 0.2)
+    padding: 0 32px 0 4px
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
     .bulletin-img
-      display inline-block
-      width 22px
-      height 12px
+      display: inline-block
+      width: 22px
+      height: 12px
       bg-img(bulletin)
-      background-size 22px 12px
-      background-repeat no-repeat
-      vertical-align top
-      margin-top 8px
+      background-size: 22px 12px
+      background-repeat: no-repeat
+      vertical-align: top
+      margin-top: 8px
     .bulletin-text
-      font-size 10px
-      vertical-align top
-      margin 0 4px
+      font-size: 10px
+      vertical-align: top
+      margin: 0 4px
     .iconfont
-      position absolute
-      right 12px
-      top 0
+      position: absolute
+      right: 12px
+      top: 0
   .bgImg
-    position absolute
-    left 0
-    right 0
-    top 0
-    bottom 0
-    filter blur(10px)
-    z-index -1
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    filter: blur(10px)
+    z-index: -1
     img
-      width 100%
-      height 100%
+      width: 100%
+      height: 100%
   .detail
-    position fixed
-    z-index 100
-    box-sizing border-box
-    top 0
-    left 0
-    width 100%
-    bottom 0
-    text-align center
-    overflow auto
-    padding 64px 30px 32px 30px
-    background rgba(7, 17, 27, 0.8)
+    position: fixed
+    z-index: 100
+    box-sizing: border-box
+    top: 0
+    left: 0
+    width: 100%
+    bottom: 0
+    text-align: center
+    overflow: auto
+    padding: 64px 30px 32px 30px
+    background: rgba(7, 17, 27, 0.8)
     &.fade-enter-active
-      animation: fade .5s
+      animation: fade 0.5s
     &.fade-leave-active
-      animation: fade .5s reverse
+      animation: fade 0.5s reverse
     @keyframes fade
       0%
         transform: scale(0)
-        background rgba(7, 17, 27, 0)
+        background: rgba(7, 17, 27, 0)
       50%
         transform: scale(1.5)
       100%
         transform: scale(1)
     .detail-wrap
-      min-height 100%
-      box-sizing border-box
-      padding-bottom 32px
-      backdrop-filter blur(10px)
+      min-height: 100%
+      box-sizing: border-box
+      padding-bottom: 32px
+      backdrop-filter: blur(10px)
       .detail-name
-        margin-bottom 16px
-        font-size 16px
-        font-weight 700
+        margin-bottom: 16px
+        font-size: 16px
+        font-weight: 700
       >.star-wrap
-        margin-bottom 28px
-        text-align center
+        margin-bottom: 28px
+        text-align: center
       .detail-title
-        display flex
-        height 14px
-        margin-bottom 24px
-        font-size 0
+        display: flex
+        height: 14px
+        margin-bottom: 24px
+        font-size: 0
         .line
-          flex 1
-          height 5px
-          border-bottom 2px solid rgba(255, 255, 255, 0.2)
+          flex: 1
+          height: 5px
+          border-bottom: 2px solid rgba(255, 255, 255, 0.2)
         .detail-title-text
-          font-size 14px
-          font-weight 700
-          padding 0 12px
+          font-size: 14px
+          font-weight: 700
+          padding: 0 12px
       .detail-content-wrap
-        margin 0 12px 22px 12px
+        margin: 0 12px 22px 12px
         .detail-content
-          height 16px
-          line-height 16px
-          text-align left
-          margin-bottom 12px
-          font-size 0
+          height: 16px
+          line-height: 16px
+          text-align: left
+          margin-bottom: 12px
+          font-size: 0
           .detail-img
-            display inline-block
-            width 16px
-            height 16px
-            margin-right 6px
-            vertical-align top
-            background-size 16px 16px
-            background-repeat no-repeat
+            display: inline-block
+            width: 16px
+            height: 16px
+            margin-right: 6px
+            vertical-align: top
+            background-size: 16px 16px
+            background-repeat: no-repeat
           .decrease
-            bg-img decrease_1
+            bg-img: decrease_1
           .discount
-            bg-img discount_1
+            bg-img: discount_1
           .guarantee
-            bg-img guarantee_1
+            bg-img: guarantee_1
           .special
-            bg-img special_1
+            bg-img: special_1
           .invoice
-            bg-img invoice_1
+            bg-img: invoice_1
           .detail-content
-            font-size 12px
+            font-size: 12px
       .detail-bulletin
-        margin 0 12px 40px 12px
-        font-size 12px
-        line-height 24px
-        text-align left
+        margin: 0 12px 40px 12px
+        font-size: 12px
+        line-height: 24px
+        text-align: left
     >.iconfont
-      width 32px
-      height 32px
-      margin -32px auto 0 auto
-      font-size 32px
-      color rgba(255, 255, 255, 0.5)
+      width: 32px
+      height: 32px
+      margin: -32px auto 0 auto
+      font-size: 32px
+      color: rgba(255, 255, 255, 0.5)
 </style>

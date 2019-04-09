@@ -6,7 +6,7 @@
       <router-link to="/ratings" class="tab-item">评价</router-link>
       <router-link to="/seller" class="tab-item">商家</router-link>
     </div>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
 
@@ -41,16 +41,16 @@ export default {
 @import 'common/stylus/mixin.styl'
 #app
   .tab
-    display flex
-    width 100%
-    height 40px
-    line-height 40px
-    color rgb(77, 85, 93)
-    border-1px rgba(7, 17, 27, 0.1)
+    display: flex
+    width: 100%
+    height: 40px
+    line-height: 40px
+    color: rgb(77, 85, 93)
+    border-1px: rgba(7, 17, 27, 0.1)
     .tab-item
-      flex 1
-      font-size 14px
-      text-align center
+      flex: 1
+      font-size: 14px
+      text-align: center
     .active
-      color rgb(240, 20, 20)
+      color: rgb(240, 20, 20)
 </style>
