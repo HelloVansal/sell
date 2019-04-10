@@ -42,10 +42,8 @@
                     <span class="price">{{item.price}}</span>
                     <span class="old-price" v-if="item.oldPrice">￥{{item.oldPrice}}</span>
                   </div>
-                  <div class="add">
-                    <span class="iconfont" v-show="false">&#xe60c;</span>
-                    <span class="num" v-show="false">0</span>
-                    <span class="iconfont" @click="foodAdd(index,$event)">&#xe60b;</span>
+                  <div class="cartControl-wrap">
+                    <cartControl :food="item" :index="index"></cartControl>
                   </div>
                 </div>
               </li>
@@ -61,6 +59,7 @@
 <script>
 import BScroll from 'better-scroll'
 import shopCart from 'components/shopCart/shopCart'
+import cartControl from 'components/cartControl/cartControl'
 
 const ERR_OK = 0
 
@@ -69,7 +68,8 @@ export default {
     seller: Object
   },
   components: {
-    shopCart
+    shopCart,
+    cartControl
   },
   data () {
     return {
@@ -116,6 +116,7 @@ export default {
         click: true
       })
       this.mainScroll = new BScroll(this.$refs.mainWrap, {
+        click: true,
         probeType: 3
       })
       // 实时计算当前滚动的Y值
@@ -269,21 +270,8 @@ export default {
                 .old-price
                   margin-left: 8px
                   text-decoration: line-through
-              .add
+              .cartControl-wrap
                 position: absolute
                 right: 0
-                bottom: 18px
-                font-size: 0
-              .num
-                display: inline-block
-                width: 24px
-                font-size: 10px
-                line-height: 24px
-                text-align: center
-                color: rgb(147, 153, 159)
-              .iconfont
-                vertical-align: top
-                font-size: 24px
-                line-height: 24px
-                color: rgb(0, 160, 220)
+                bottom: 12px
 </style>

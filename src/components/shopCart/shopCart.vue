@@ -34,7 +34,7 @@ export default {
         return [
           {
             price: 3,
-            count: 20
+            count: 3
           }
         ]
       }
@@ -150,7 +150,7 @@ export default {
     text-align: center
     background-color: rgba(255, 255, 255, 0.1)
     &.settlement
-      background-color: rgb(0, 160, 220)
+      background-color: #00b43c
     .settlement-white
       color #fff
       font-size 20px
