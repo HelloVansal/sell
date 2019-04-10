@@ -11,9 +11,7 @@
     <div class="price" :class="{'price-white':totalPrice}">￥{{totalPrice}}</div>
     <div class="delivery-fee">另需配送费￥{{deliveryPrice}}元</div>
     <div class="start-fee" :class="{settlement: totalPrice>=20}">
-      <span v-if="totalPrice === 0">￥{{minPrice}}起送</span>
-      <span v-if="totalPrice < 20">还差￥{{minPrice-totalPrice}}起送</span>
-      <span v-if="totalPrice >= 20" :class="{'settlement-white': totalPrice>=20}">结算</span>
+      <span :class="{'settlement-white': totalPrice>=20}">{{payDesc}}</span>
     </div>
   </div>
 </template>
@@ -36,7 +34,7 @@ export default {
         return [
           {
             price: 3,
-            count: 2
+            count: 20
           }
         ]
       }
@@ -56,6 +54,16 @@ export default {
         count += food.count
       })
       return count
+    },
+    payDesc () {
+      if (this.totalPrice === 0) {
+        return `￥${this.minPrice}起送`
+      } else
+      if (this.totalPrice < this.minPrice) {
+        return `还差￥${this.minPrice - this.totalPrice}起送`
+      } else {
+        return '去结算'
+      }
     }
   }
 

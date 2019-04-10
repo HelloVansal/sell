@@ -45,7 +45,7 @@
                   <div class="add">
                     <span class="iconfont" v-show="false">&#xe60c;</span>
                     <span class="num" v-show="false">0</span>
-                    <span class="iconfont" @click="funcAdd(index)">&#xe60b;</span>
+                    <span class="iconfont" @click="foodAdd(index,$event)">&#xe60b;</span>
                   </div>
                 </div>
               </li>
@@ -143,13 +143,10 @@ export default {
       let food = this.$refs.mainWrap.getElementsByClassName('food-list-hook')[index]
       this.mainScroll.scrollToElement(food, 300)
     },
-    funcAdd (index) {
+    foodAdd (index, event) {
       // let food = this.$refs.foods.getElementsByClassName('food-item-hook')[index]
       // let food = this.$refs.foods
-      this.$nextTick(() => {
-        console.log('1')
-      }
-      )
+      console.log('1')
     }
   }
 }
