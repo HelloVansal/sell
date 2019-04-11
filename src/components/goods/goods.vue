@@ -43,7 +43,7 @@
                     <span class="old-price" v-if="item.oldPrice">￥{{item.oldPrice}}</span>
                   </div>
                   <div class="cartControl-wrap">
-                    <cartControl :food="item" :index="index"></cartControl>
+                    <cartControl :food="item" :index="index" @cartAdd="cartDrop"></cartControl>
                   </div>
                 </div>
               </li>
@@ -52,7 +52,13 @@
         </div>
       </div>
     </div>
-    <shopCart class="shopCart" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopCart>
+    <shopCart
+      class="shopCart"
+      ref="shopCart"
+      :selectFoods="selectFoods"
+      :deliveryPrice="seller.deliveryPrice"
+      :minPrice="seller.minPrice"
+    ></shopCart>
   </div>
 </template>
 
@@ -73,10 +79,9 @@ export default {
   },
   data () {
     return {
-      goods: {},
+      goods: [],
       listHeight: [],
-      scrollY: 0,
-      selectFoods: []
+      scrollY: 0
     }
   },
   created () {
@@ -105,6 +110,17 @@ export default {
         }
       }
       return 0
+    },
+    selectFoods () {
+      let foods = []
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if (food.count) {
+            foods.push(food)
+          }
+        })
+      })
+      return foods
     }
   },
   methods: {
@@ -144,10 +160,9 @@ export default {
       let food = this.$refs.mainWrap.getElementsByClassName('food-list-hook')[index]
       this.mainScroll.scrollToElement(food, 300)
     },
-    foodAdd (index, event) {
-      // let food = this.$refs.foods.getElementsByClassName('food-item-hook')[index]
-      // let food = this.$refs.foods
-      console.log('1')
+    // 子组件传过来的一个事件接收一个target参数
+    cartDrop (target) {
+      this.$refs.shopCart.drop(target)
     }
   }
 }

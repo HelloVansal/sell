@@ -65,8 +65,12 @@ export default {
         return '去结算'
       }
     }
+  },
+  methods: {
+    drop (el) {
+      console.log(el)
+    }
   }
-
 }
 </script>
 
@@ -152,6 +156,6 @@ export default {
     &.settlement
       background-color: #00b43c
     .settlement-white
-      color #fff
-      font-size 20px
+      color: #fff
+      font-size: 20px
 </style>

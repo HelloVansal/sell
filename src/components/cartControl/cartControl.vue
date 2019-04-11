@@ -6,7 +6,18 @@
       </span>
     </transition>
     <span class="num" v-show="food.count>0">{{food.count}}</span>
-    <span class="iconfont" @click="addCart($event)">&#xe60b;</span>
+    <span class="iconfont add" @click="addCart($event)">&#xe60b;</span>
+    <div class="ball-wrap">
+      <transition
+        name="drop"
+        class="ball"
+        v-show="ball.show"
+        v-for="(ball,index) of this.balls"
+        :key="index"
+      >
+        <div class="inner"></div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -22,6 +33,17 @@ export default {
       type: Number
     }
   },
+  data () {
+    return {
+      balls: [
+        { show: false },
+        { show: false },
+        { show: false },
+        { show: false },
+        { show: false }
+      ]
+    }
+  },
   methods: {
     addCart (event) {
       if (!event._constructed) {
@@ -32,6 +54,7 @@ export default {
       } else {
         this.food.count++
       }
+      this.$emit('cartAdd', event.target)
     },
     decreaseCart (event) {
       if (!event._constructed) {
@@ -48,19 +71,19 @@ export default {
 .cartControl
   font-size: 0
   .cart-decrease
-    transition: all .4s linear
+    display: inline-block
+    padding: 6px
     .inner
-      transition all 0.4s linear
+      font-size: 24px
+      line-height: 24px
+      color: rgb(0, 160, 220)
     &.fade-enter-active, &.fade-leave-active
+      transition: all 0.5s
       opacity: 1
-      transform: translate3d(0, 0, 0)
-      .inner
-        transform: rotate(0)
+      transform: translate3d(0, 0, 0) rotate(0)
     &.fade-enter, &.fade-leave-to
       opacity: 0
-      transform: translate3d(24px, 0, 0)
-      .inner
-        transform: rotate(180deg)
+      transform: translate3d(24px, 0, 0) rotate(180deg)
   .num
     display: inline-block
     width: 12px
@@ -70,11 +93,22 @@ export default {
     margin-top: 6px
     text-align: center
     color: rgb(147, 153, 159)
-  .iconfont
+  .add
     display: inline-block
     padding: 6px
-    vertical-align: top
     font-size: 24px
     line-height: 24px
     color: rgb(0, 160, 220)
+  .ball-wrap
+    .ball
+      display: inline-block
+      position: fixed
+      left: 32px
+      bottom: 22px
+      z-index: 200
+      .inner
+        width: 16px
+        height: 16px
+        border-radius: 50%
+        background-color: rgb(0, 160, 220)
 </style>
