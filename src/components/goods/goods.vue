@@ -162,7 +162,10 @@ export default {
     },
     // 子组件传过来的一个事件接收一个target参数
     cartDrop (target) {
-      this.$refs.shopCart.drop(target)
+      // 体验优化，异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopCart.drop(target)
+      })
     }
   }
 }

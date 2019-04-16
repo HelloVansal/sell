@@ -7,17 +7,6 @@
     </transition>
     <span class="num" v-show="food.count>0">{{food.count}}</span>
     <span class="iconfont add" @click="addCart($event)">&#xe60b;</span>
-    <div class="ball-wrap">
-      <transition
-        name="drop"
-        class="ball"
-        v-show="ball.show"
-        v-for="(ball,index) of this.balls"
-        :key="index"
-      >
-        <div class="inner"></div>
-      </transition>
-    </div>
   </div>
 </template>
 
@@ -31,17 +20,6 @@ export default {
     },
     index: {
       type: Number
-    }
-  },
-  data () {
-    return {
-      balls: [
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false }
-      ]
     }
   },
   methods: {
@@ -99,16 +77,4 @@ export default {
     font-size: 24px
     line-height: 24px
     color: rgb(0, 160, 220)
-  .ball-wrap
-    .ball
-      display: inline-block
-      position: fixed
-      left: 32px
-      bottom: 22px
-      z-index: 200
-      .inner
-        width: 16px
-        height: 16px
-        border-radius: 50%
-        background-color: rgb(0, 160, 220)
 </style>
