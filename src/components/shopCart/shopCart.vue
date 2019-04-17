@@ -31,10 +31,10 @@
         </div>
       </transition>
     </div>
-    <div class="shopCart-list border-1px" v-show="fold">
+    <div class="shopCart-list border-1px" v-show="listShow">
       <div class="list-title-wrap">
         <span class="list-title">购物车</span>
-        <span class="clear">清空</span>
+        <span class="clear" @click="funcClear">清空</span>
       </div>
       <div class="shopCart-content-wrap" ref="listContent">
         <div class="shopCart-content" v-for="(food,index) of selectFoods" :key="index">
@@ -43,17 +43,18 @@
             <span class="shopCart-price-logo">￥</span>
             <span class="shopCart-price">{{food.price*food.count}}</span>
           </span>
-          <span class="cartControl-wrap">
-            <cartControl ref="cartControl" :food="food" :index="index"></cartControl>
+          <span class="cartControl-wrap" @click="funcCartControl(index,$event)">
+            <cartControl :food="food" :index="index"></cartControl>
           </span>
         </div>
       </div>
     </div>
+    <div class="shopCart-list-bg" v-show="listShow"></div>
   </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+// import BScroll from 'better-scroll'
 import cartControl from 'components/cartControl/cartControl'
 
 export default {
@@ -87,7 +88,7 @@ export default {
         { show: false }
       ],
       dropBalls: [],
-      fold: true
+      listShow: false
     }
   },
   computed: {
@@ -114,14 +115,6 @@ export default {
       } else {
         return '去结算'
       }
-    },
-    listShow () {
-      if (!this.totalCount) {
-        this.fold = false
-        return false
-      }
-      let show = !this.fold;
-      return show
     }
   },
   methods: {
@@ -176,33 +169,26 @@ export default {
       }
     },
     funcShopCartListShow () {
-      if (!this.totalCount) {
-        return
-      }
-      this.fold = !this.fold
-    }
-  },
-  watch: {
-    totalCount: function () {
-      if (!this.totalCount) {
-        this.fold = true
-        return false
+      if (this.totalCount) {
+        this.listShow = !this.listShow
       }
     },
-    fold: function (totalCount) {
-      let show = this.fold
-      if (show) {
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = new BScroll(this.$refs.listContent, {
-              click: true
-            })
-          } else {
-            this.scroll.refresh()
-          }
-        })
+    funcClear () {
+      this.selectFoods.forEach(food => {
+        food.count = 0
+      })
+      this.listShow = false
+    },
+    funcCartControl (index, event) {
+      if (event.target.className === 'iconfont add') {
+        this.selectFoods[index].count++
       }
-      return show
+      if (event.target.className === 'iconfont inner') {
+        this.selectFoods[index].count--
+        if (!this.totalCount) {
+          this.listShow = false
+        }
+      }
     }
   }
 }
@@ -314,10 +300,6 @@ export default {
     font-size: 0
     backdrop-filter: blur(10px)
     transform: translate3d(0, -100%, 0)
-    // &.listIn-enter-active, &.listIn-leave-active
-    // transition: all 0.5s
-    // &.listIn-enter, &.listIn-leave-to
-    // transform: translate3d(0, 0, 0)
     .list-title-wrap
       padding: 0 18px
       border-1px: rgba(7, 12, 27, 0.1)
@@ -336,11 +318,21 @@ export default {
         line-height: 40px
         border: none
         background-color: none
+  .shopCart-list-bg
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: rgba(7, 17, 27, 0.6)
+    z-index: -5
   .shopCart-content-wrap
     padding: 0 18px
     max-height: 217px
-    overflow: hidden
+    overflow: auto
     background-color: #fff
+    &::-webkit-scrollbar
+      width 0
     .shopCart-content
       display: flex
       margin: 12px 0
