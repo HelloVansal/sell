@@ -14,7 +14,7 @@
       @click="funcShopCartListShow"
     >￥{{totalPrice}}</div>
     <div class="delivery-fee" @click="funcShopCartListShow">另需配送费￥{{deliveryPrice}}元</div>
-    <div class="start-fee" :class="{settlement: totalPrice>=20}">
+    <div class="start-fee" :class="{settlement: totalPrice>=20}" @click="settlement">
       <span :class="{'settlement-white': totalPrice>=20}">{{payDesc}}</span>
     </div>
     <div class="ball-wrap">
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="shopCart-list-bg" v-show="listShow"></div>
+    <div class="shopCart-list-bg" v-show="listShow" @click="funcShopCartListShow"></div>
   </div>
 </template>
 
@@ -174,7 +174,7 @@ export default {
       }
     },
     funcClear () {
-      this.selectFoods.forEach(food => {
+      this.selectFoods.forEach((food) => {
         food.count = 0
       })
       this.listShow = false
@@ -188,6 +188,15 @@ export default {
         if (!this.totalCount) {
           this.listShow = false
         }
+      }
+    },
+    settlement () {
+      if (this.totalPrice > this.minPrice) {
+        window.alert(`支付${this.totalPrice}元`)
+        this.selectFoods.forEach((food) => {
+          food.count = 0
+        })
+        this.listShow = false
       }
     }
   }
@@ -296,7 +305,7 @@ export default {
     left: 0
     top: 0
     width: 100%
-    z-index: -1
+    z-index: 40
     font-size: 0
     backdrop-filter: blur(10px)
     transform: translate3d(0, -100%, 0)
@@ -331,8 +340,9 @@ export default {
     max-height: 217px
     overflow: auto
     background-color: #fff
+    backdrop-filter: blur(10px)
     &::-webkit-scrollbar
-      width 0
+      width: 0
     .shopCart-content
       display: flex
       margin: 12px 0

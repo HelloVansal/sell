@@ -24,26 +24,27 @@
             <ul class="foods-wrap" ref="foods">
               <li
                 class="food-item border-1px food-item-hook"
-                v-for="(item, index) of good.foods"
+                v-for="(food, index) of good.foods"
                 :key="index"
+                @click="funcFoodShow(food,$event)"
               >
                 <div class="food-img-wrap">
-                  <img :src="item.image" width="60" height="60">
+                  <img :src="food.image" width="60" height="60">
                 </div>
                 <div class="food-content">
-                  <div class="name">{{item.name}}</div>
-                  <div class="desc" v-if="item.description">{{item.description}}</div>
+                  <div class="name">{{food.name}}</div>
+                  <div class="desc" v-if="food.description">{{food.description}}</div>
                   <div class="desc2">
-                    <span class="sellCount">月售{{item.sellCount}}份</span>
-                    <span class="rating">好评率{{item.rating}}%</span>
+                    <span class="sellCount">月售{{food.sellCount}}份</span>
+                    <span class="rating">好评率{{food.rating}}%</span>
                   </div>
                   <div class="price-all">
                     <span class="price-icon">￥</span>
-                    <span class="price">{{item.price}}</span>
-                    <span class="old-price" v-if="item.oldPrice">￥{{item.oldPrice}}</span>
+                    <span class="price">{{food.price}}</span>
+                    <span class="old-price" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartControl-wrap">
-                    <cartControl :food="item" :index="index" @cartAdd="cartDrop"></cartControl>
+                    <cartControl :food="food" :index="index" @cartAdd="cartDrop"></cartControl>
                   </div>
                 </div>
               </li>
@@ -59,6 +60,7 @@
       :deliveryPrice="seller.deliveryPrice"
       :minPrice="seller.minPrice"
     ></shopCart>
+    <food :food="selectFood" :foodShow="foodShow"></food>
   </div>
 </template>
 
@@ -66,6 +68,7 @@
 import BScroll from 'better-scroll'
 import shopCart from 'components/shopCart/shopCart'
 import cartControl from 'components/cartControl/cartControl'
+import food from 'components/food/food'
 
 const ERR_OK = 0
 
@@ -75,13 +78,16 @@ export default {
   },
   components: {
     shopCart,
-    cartControl
+    cartControl,
+    food
   },
   data () {
     return {
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectFood: {},
+      foodShow: false
     }
   },
   created () {
@@ -166,6 +172,14 @@ export default {
       this.$nextTick(() => {
         this.$refs.shopCart.drop(target)
       })
+    },
+    funcFoodShow (food, event) {
+      if (!event._constructed) {
+        return
+      }
+      this.foodShow = true
+      this.selectFood = food
+      console.log(this.selectFood)
     }
   }
 }
