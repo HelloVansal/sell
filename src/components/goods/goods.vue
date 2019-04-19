@@ -177,6 +177,9 @@ export default {
       if (!event._constructed) {
         return
       }
+      if (event.target.className === 'iconfont add' || event.target.className === 'iconfont inner') {
+        return
+      }
       this.foodShow = true
       this.selectFood = food
       console.log(this.selectFood)

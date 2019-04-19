@@ -192,7 +192,7 @@ export default {
     },
     settlement () {
       if (this.totalPrice > this.minPrice) {
-        window.alert(`支付${this.totalPrice}元`)
+        window.alert(`支付${this.totalPrice + 4}元`)
         this.selectFoods.forEach((food) => {
           food.count = 0
         })

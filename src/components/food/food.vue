@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="only-content-wrap">
-            <span class="iconfont only-content">&#xe602;</span>
+            <span class="iconfont only-content" :class="onlyContentFocus" @click="onlyContent">&#xe602;</span>
             <span class="only-content-desc">只看有内容的评价</span>
           </div>
         </div>
@@ -77,6 +77,7 @@
 export default {
   data () {
     return {
+      onlyContentFocus: ''
     }
   },
   props: {
@@ -89,11 +90,13 @@ export default {
     }
   },
   computed: {
+    // 所有评论数量
     allRatings () {
       if (this.food.ratings) {
         return this.food.ratings.length
       }
     },
+    // 推荐评论数量
     recommend () {
       let i = 0
       if (this.food.ratings) {
@@ -106,7 +109,11 @@ export default {
       return i
     }
   },
-  methods: {}
+  methods: {
+    onlyContent () {
+
+    }
+  }
 }
 
 </script>
@@ -235,6 +242,8 @@ export default {
           vertical-align: top
           margin-right: 4px
           font-size: 24px
+          color: rgb(147, 153, 159)
+        &.onlyContentFocus
           color: rgb(147, 153, 159)
         .only-content-desc
           font-size: 12px
