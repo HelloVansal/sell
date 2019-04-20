@@ -37,15 +37,17 @@
         <span class="clear" @click="funcClear">清空</span>
       </div>
       <div class="shopCart-content-wrap" ref="listContent">
-        <div class="shopCart-content" v-for="(food,index) of selectFoods" :key="index">
-          <span class="shopCart-name">{{food.name}}</span>
-          <span class="shopCart-price-wrap">
-            <span class="shopCart-price-logo">￥</span>
-            <span class="shopCart-price">{{food.price*food.count}}</span>
-          </span>
-          <span class="cartControl-wrap" @click="funcCartControl(index,$event)">
-            <cartControl :food="food" :index="index"></cartControl>
-          </span>
+        <div class="shopCart-content-scroll-wrap">
+          <div class="shopCart-content" v-for="(food,index) of selectFoods" :key="index">
+            <span class="shopCart-name">{{food.name}}</span>
+            <span class="shopCart-price-wrap">
+              <span class="shopCart-price-logo">￥</span>
+              <span class="shopCart-price">{{food.price*food.count}}</span>
+            </span>
+            <span class="cartControl-wrap" @click="funcCartControl(index,$event)">
+              <cartControl :food="food" :index="index"></cartControl>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +56,7 @@
 </template>
 
 <script>
-// import BScroll from 'better-scroll'
+import BScroll from 'better-scroll'
 import cartControl from 'components/cartControl/cartControl'
 
 export default {
@@ -171,6 +173,16 @@ export default {
     funcShopCartListShow () {
       if (this.totalCount) {
         this.listShow = !this.listShow
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            })
+          } else {
+            this.scroll.fresh()
+          }
+        })
+
       }
     },
     funcClear () {
@@ -303,12 +315,11 @@ export default {
   .shopCart-list
     position: absolute
     left: 0
-    top: 0
+    bottom: 47px
     width: 100%
-    z-index: 40
+    z-index: -1
     font-size: 0
     backdrop-filter: blur(10px)
-    transform: translate3d(0, -100%, 0)
     .list-title-wrap
       padding: 0 18px
       border-1px: rgba(7, 12, 27, 0.1)
@@ -338,11 +349,11 @@ export default {
   .shopCart-content-wrap
     padding: 0 18px
     max-height: 217px
-    overflow: auto
+    overflow: hidden
     background-color: #fff
     backdrop-filter: blur(10px)
-    &::-webkit-scrollbar
-      width: 0
+    // &::-webkit-scrollbar
+    // width: 0
     .shopCart-content
       display: flex
       margin: 12px 0

@@ -230,8 +230,6 @@ export default {
       0%
         transform: scale(0)
         background: rgba(7, 17, 27, 0)
-      50%
-        transform: scale(1.5)
       100%
         transform: scale(1)
     .detail-wrap

@@ -60,7 +60,7 @@
       :deliveryPrice="seller.deliveryPrice"
       :minPrice="seller.minPrice"
     ></shopCart>
-    <food :food="selectFood" :foodShow="foodShow"></food>
+    <food :food="selectFood" ref="food" @cartAdd="cartDrop"></food>
   </div>
 </template>
 
@@ -177,12 +177,8 @@ export default {
       if (!event._constructed) {
         return
       }
-      if (event.target.className === 'iconfont add' || event.target.className === 'iconfont inner') {
-        return
-      }
-      this.foodShow = true
+      this.$refs.food.show()
       this.selectFood = food
-      console.log(this.selectFood)
     }
   }
 }
