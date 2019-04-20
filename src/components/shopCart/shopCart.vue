@@ -182,7 +182,6 @@ export default {
             this.scroll.fresh()
           }
         })
-
       }
     },
     funcClear () {
