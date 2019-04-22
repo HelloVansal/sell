@@ -179,7 +179,7 @@ export default {
               click: true
             })
           } else {
-            this.scroll.fresh()
+            this.scroll.refresh()
           }
         })
       }
