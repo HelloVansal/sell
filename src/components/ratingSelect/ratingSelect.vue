@@ -101,7 +101,7 @@ export default {
 @import '../../common/stylus/mixin'
 .ratingSelect
   .rating-style-wrap
-    padding: 12px 0 18px 0
+    padding: 18px 0 18px 0
     font-size: 0
     border-1px(rgba(7, 17, 27, 0.1))
     .rating-style-all, .rating-style-Recommend, .rating-style-bad

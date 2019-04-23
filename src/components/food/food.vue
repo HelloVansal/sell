@@ -275,7 +275,6 @@ export default {
       font-size: 16px
       color: rgb(7, 17, 27)
       line-height: 16px
-      margin-bottom: 6px
   .rating-contents-wrap
     padding: 0 18px
     border-top: 1px solid rgba(7, 17, 27, 0.1)
