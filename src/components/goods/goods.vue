@@ -69,8 +69,9 @@ import BScroll from 'better-scroll'
 import shopCart from 'components/shopCart/shopCart'
 import cartControl from 'components/cartControl/cartControl'
 import food from 'components/food/food'
+import data from 'common/data'
 
-const ERR_OK = 0
+// const ERR_OK = 0
 
 export default {
   props: {
@@ -92,18 +93,23 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-    this.$http.get('/api/goods').then((response) => {
-      response = response.body
-      if (response.errno === ERR_OK) {
-        this.goods = response.data
-        // 由于vue中数据更新是异步的，在dom解构没有加载完成，BScroll无法获取目标容器的高度，会出现无法滚动的现象，vue中的$nextTick()可以解决这个问题，在页面数据变化完成后才执行的函数需要写在$nextTick中 。
-        this.$nextTick(() => {
-          this._initScroll()
-          this._calculateHeight()
-        })
-      }
-    }
-    )
+    // this.$http.get('/api/goods').then((response) => {
+    //   response = response.body
+    //   if (response.errno === ERR_OK) {
+    //     this.goods = response.data
+    //     // 由于vue中数据更新是异步的，在dom解构没有加载完成，BScroll无法获取目标容器的高度，会出现无法滚动的现象，vue中的$nextTick()可以解决这个问题，在页面数据变化完成后才执行的函数需要写在$nextTick中 。
+    //     this.$nextTick(() => {
+    //       this._initScroll()
+    //       this._calculateHeight()
+    //     })
+    //   }
+    // }
+    // )
+    this.goods = data.goods
+    this.$nextTick(() => {
+      this._initScroll()
+      this._calculateHeight()
+    })
   },
   computed: {
     // 计算当Y值在listHeight列表的某个区间时，返回这个标题的索引，将这个索引绑定到menu-wrap下的所有标签，当这个索引等于所有标签中的某个索引时，将这个标签绑定class="current"，就可以设置样式了
@@ -186,123 +192,123 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-@import '../../common/stylus/mixin'
-.goods
-  .goods-wrap
-    display: flex
-    position: absolute
-    width: 100%
-    top: 174px
-    left: 0
-    bottom: 47px
-    overflow: hidden
-    .menu-wrap
+  @import '../../common/stylus/mixin'
+  .goods
+    .goods-wrap
       display: flex
-      flex-shrink: 0
-      flex-direction: column
-      width: 80px
-      background-color: #f3f5f7
-      .current
-        z-index: 10
-        margin-top: -1px
-        font-weight: 700
-        background-color: #fff
-        &.text
-          border-none()
-      .menu-item
-        display: table
-        width: 100%
-        padding: 0 12px
-        box-sizing: border-box
-        height: 54px
-        .text
-          display: table-cell
-          vertical-align: middle
-          font-size: 12px
-          line-height: 14px
-          color: rgb(24, 20, 20)
-          border-1px(rgba(7, 17, 27, 0.1))
-        .icon
-          display: inline-block
-          width: 14px
-          height: 14px
-          font-size: 14px
-          vertical-align: top
-          background-size: 14px 14px
-          background-repeat: no-repeat
-          &.decrease
-            bg-img: decrease_3
-          &.discount
-            bg-img: discount_3
-          &.guarantee
-            bg-img: guarantee_3
-          &.special
-            bg-img: special_3
-          &.invoice
-            bg-img: invoice_3
-    .main-wrap
-      flex: 1
+      position: absolute
       width: 100%
-      .main
-        .title
+      top: 174px
+      left: 0
+      bottom: 47px
+      overflow: hidden
+      .menu-wrap
+        display: flex
+        flex-shrink: 0
+        flex-direction: column
+        width: 80px
+        background-color: #f3f5f7
+        .current
+          z-index: 10
+          margin-top: -1px
+          font-weight: 700
+          background-color: #fff
+          &.text
+            border-none()
+        .menu-item
+          display: table
           width: 100%
-          height: 26px
-          padding-left: 8px
-          font-size: 12px
-          line-height: 26px
-          border-left: 3px solid #d9dde1
-          color: rgb(147, 153, 159)
-          background-color: #f3f5f7
-        .foods-wrap
-          width: 100%
+          padding: 0 12px
           box-sizing: border-box
-          padding: 0 18px
-          .food-item
-            display: flex
-            position: relative
-            padding: 18px 0
+          height: 54px
+          .text
+            display: table-cell
+            vertical-align: middle
+            font-size: 12px
+            line-height: 14px
+            color: rgb(24, 20, 20)
+            border-1px(rgba(7, 17, 27, 0.1))
+          .icon
+            display: inline-block
+            width: 14px
+            height: 14px
+            font-size: 14px
+            vertical-align: top
+            background-size: 14px 14px
+            background-repeat: no-repeat
+            &.decrease
+              bg-img: decrease_3
+            &.discount
+              bg-img: discount_3
+            &.guarantee
+              bg-img: guarantee_3
+            &.special
+              bg-img: special_3
+            &.invoice
+              bg-img: invoice_3
+      .main-wrap
+        flex: 1
+        width: 100%
+        .main
+          .title
+            width: 100%
+            height: 26px
+            padding-left: 8px
+            font-size: 12px
+            line-height: 26px
+            border-left: 3px solid #d9dde1
+            color: rgb(147, 153, 159)
+            background-color: #f3f5f7
+          .foods-wrap
+            width: 100%
             box-sizing: border-box
-            border-1px: rgba(7, 17, 27, 0.1)
-            &:last-child
-              border-none()
-            .food-img-wrap
-              display: inline-block
-              margin-right: 10px
-              vertical-align: top
-            .food-content
-              flex: 1
-              margin-top: 2px
-              .name
-                font-size: 14px
-                color: rgb(7, 17, 27)
-                line-height: 14px
-                margin-bottom: 8px
-              .desc, .desc2
-                font-size: 10px
-                color: rgb(147, 153, 159)
-                margin-bottom: 8px
-              .desc
-                line-height: 14px
-              .rating
-                margin-left: 6px
-              .price-all
-                font-size: 0
-                .price-icon, .price, .old-price
+            padding: 0 18px
+            .food-item
+              display: flex
+              position: relative
+              padding: 18px 0
+              box-sizing: border-box
+              border-1px: rgba(7, 17, 27, 0.1)
+              &:last-child
+                border-none()
+              .food-img-wrap
+                display: inline-block
+                margin-right: 10px
+                vertical-align: top
+              .food-content
+                flex: 1
+                margin-top: 2px
+                .name
+                  font-size: 14px
+                  color: rgb(7, 17, 27)
+                  line-height: 14px
+                  margin-bottom: 8px
+                .desc, .desc2
                   font-size: 10px
                   color: rgb(147, 153, 159)
-                  font-weight: normal
-                  line-height: 24px
-                .price-icon
-                  color: red
-                .price
-                  font-size: 14px
-                  font-weight: 700
-                  color: red
-                .old-price
-                  margin-left: 8px
-                  text-decoration: line-through
-              .cartControl-wrap
-                position: absolute
-                right: 0
-                bottom: 12px
+                  margin-bottom: 8px
+                .desc
+                  line-height: 14px
+                .rating
+                  margin-left: 6px
+                .price-all
+                  font-size: 0
+                  .price-icon, .price, .old-price
+                    font-size: 10px
+                    color: rgb(147, 153, 159)
+                    font-weight: normal
+                    line-height: 24px
+                  .price-icon
+                    color: red
+                  .price
+                    font-size: 14px
+                    font-weight: 700
+                    color: red
+                  .old-price
+                    margin-left: 8px
+                    text-decoration: line-through
+                .cartControl-wrap
+                  position: absolute
+                  right: 0
+                  bottom: 12px
 </style>

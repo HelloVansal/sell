@@ -12,8 +12,9 @@
 
 <script>
 import header from 'components/header/header'
+import data from 'common/data'
 
-const ERR_OK = 0
+// const ERR_OK = 0
 
 export default {
   name: 'App',
@@ -26,12 +27,13 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/seller').then((response) => {
-      response = response.body
-      if (response.errno === ERR_OK) {
-        this.seller = response.data
-      }
-    })
+    // this.$http.get('/api/seller').then((response) => {
+    //   response = response.body
+    //   if (response.errno === ERR_OK) {
+    //     this.seller = response.data
+    //   }
+    // })
+    this.seller = data.seller
   }
 
 }
